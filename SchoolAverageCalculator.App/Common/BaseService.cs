@@ -31,15 +31,6 @@ namespace SchoolAverageCalculator.App.Common
             Items.Remove(Items.Find(x=>x.Id==item.Id));
             return true;
         }
-        public bool RemoveItem(int id)
-        {
-            var toDelete = Items.FirstOrDefault(x => x.Id == id);
-            if (toDelete == null)
-                return false;
-
-            Items.Remove(toDelete);
-            return true;
-        }
 
         public bool UpdateItem(T item)
         {
@@ -54,6 +45,11 @@ namespace SchoolAverageCalculator.App.Common
         public bool HasAnyItems()
         {
             return Items != null && Items.Any();
+        }
+
+        public T GetItemById(int id)
+        {
+            return Items.FirstOrDefault(x => x.Id == id);
         }
     }
 }

@@ -21,13 +21,9 @@ namespace SchoolAverageCalculator.Domain.Entity
         }
 
         public Mark(decimal value, decimal weight) : this(value, weight, string.Empty) { }
-        public static Mark Duplicate(Mark origin)
+        public Mark ShallowCopy()
         {
-            if (origin == null)
-                return null;
-            Mark ret = new Mark(origin.Value,origin.Weight,origin.Description);
-            ret.Id = origin.Id;
-            return ret;
+            return (Mark)this.MemberwiseClone();
         }
 
         public override string ToString()

@@ -69,7 +69,7 @@ namespace SchoolAverageCalculator.Pages
 
         public override bool Prepare()
         {
-            _mark = Mark.Duplicate(MyApp.MarksService.WithId(_markId));
+            _mark = MyApp.MarksService.WithId(_markId).ShallowCopy();
             if (_mark == null)
             {
                 Console.WriteLine("Mark doesn't exist");

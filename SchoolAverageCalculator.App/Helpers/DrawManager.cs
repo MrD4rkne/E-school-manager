@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace SchoolAverageCalculator.App.Helpers
 {
+    /// <summary>
+    /// Manager for drawing menus
+    /// </summary>
     public static class DrawManager
     {
         /// <summary>

@@ -11,7 +11,7 @@ namespace SchoolAverageCalculator.App.Concrete
     {
         private Stack<BasePage> NavigationStack = new Stack<BasePage>();
         /// <summary>
-        /// Navigate to page
+        /// Navigate to page and put it onto stack
         /// </summary>
         /// <param name="page"></param>
         public void GoTo(BasePage page)        
@@ -22,7 +22,11 @@ namespace SchoolAverageCalculator.App.Concrete
             ExpandRoute(page.Title);
             ShowPage(page);
         }
-
+        /// <summary>
+        /// Show page - Draw() (and Prepare() if it is it's first appearance with this data)
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="first"></param>
         private void ShowPage(BasePage page, bool first = true)
         {
             Console.Title = GetFullRoute();
@@ -34,7 +38,9 @@ namespace SchoolAverageCalculator.App.Concrete
             else
                 page.Draw();
         }
-
+        /// <summary>
+        /// Navigate backwards, take last Page from Stack
+        /// </summary>
         public void GoBack()
         {
             if (NavigationStack.Count > 1) {
@@ -43,6 +49,9 @@ namespace SchoolAverageCalculator.App.Concrete
             }
             ShowPage(NavigationStack.Peek(), false);
         }
+        /// <summary>
+        /// Refresh page - (Re) Draw() without Prepare()
+        /// </summary>
         public void RefreshPage()
         {
             ShowPage(NavigationStack.Peek(), false);
@@ -63,7 +72,7 @@ namespace SchoolAverageCalculator.App.Concrete
             return ret;
         }
         /// <summary>
-        /// Add lastest page
+        /// Add latest page to route
         /// </summary>
         /// <param name="endPoint"></param>
         private void ExpandRoute(string endPoint)
@@ -71,7 +80,7 @@ namespace SchoolAverageCalculator.App.Concrete
             _routes.Add(endPoint);
         }
         /// <summary>
-        /// Remove latest page
+        /// Remove latest page from route
         /// </summary>
         private void CollapseRoute()
         {
