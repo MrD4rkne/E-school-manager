@@ -13,6 +13,7 @@ namespace SchoolAverageCalculator.App.Abstract
         List<T> Items { get; set; }
         int AddItem(T item);
         bool RemoveItem(T item);
+        bool RemoveItem(int id);
         bool UpdateItem(T item);
         bool HasAnyItems();
         T GetItemById(int id);
