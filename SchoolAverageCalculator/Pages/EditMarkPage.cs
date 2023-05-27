@@ -54,14 +54,14 @@ namespace SchoolAverageCalculator.Pages
                     else
                         Console.WriteLine("Something went wrong.");
                     InputManager.WaitForAnyKey();
-                    MyApp.Navigation.GoBack();
+                    MyApp.Navigation.GoBack(true);
                     return;
                 case 5:
                     MyApp.Navigation.GoBack();
                     return;
                 case 6:
                     MyApp.MarksService.UpdateItem(_mark);
-                    MyApp.Navigation.GoBack();
+                    MyApp.Navigation.GoBack(true);
                     return;
             }
             MyApp.Navigation.RefreshPage();

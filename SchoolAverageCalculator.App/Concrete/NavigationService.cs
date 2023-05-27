@@ -23,17 +23,19 @@ namespace SchoolAverageCalculator.App.Concrete
             ShowPage(page);
         }
         /// <summary>
-        /// Show page - Draw() (and Prepare() if it is it's first appearance with this data)
+        /// Show page - Draw() (and Prepare() if it there is need to load data)
         /// </summary>
         /// <param name="page"></param>
-        /// <param name="first"></param>
-        private void ShowPage(BasePage page, bool first = true)
+        /// <param name="refreshData"></param>
+        private void ShowPage(BasePage page, bool refreshData = true)
         {
             Console.Title = GetFullRoute();
-            if (first)
+            if (refreshData)
             {
                 if (page.Prepare())
                     page.Draw();
+                else
+                    GoBack();
             }
             else
                 page.Draw();
@@ -41,20 +43,20 @@ namespace SchoolAverageCalculator.App.Concrete
         /// <summary>
         /// Navigate backwards, take last Page from Stack
         /// </summary>
-        public void GoBack()
+        public void GoBack(bool shouldReloadData = false)
         {
             if (NavigationStack.Count > 1) {
                 NavigationStack.Pop();
                 CollapseRoute();
             }
-            ShowPage(NavigationStack.Peek(), false);
+            ShowPage(NavigationStack.Peek(), shouldReloadData);
         }
         /// <summary>
         /// Refresh page - (Re) Draw() without Prepare()
         /// </summary>
-        public void RefreshPage()
+        public void RefreshPage(bool shouldReloadData = false)
         {
-            ShowPage(NavigationStack.Peek(), false);
+            ShowPage(NavigationStack.Peek(), shouldReloadData);
         }
     
 

@@ -19,7 +19,14 @@ namespace SchoolAverageCalculator.Domain.Entity
             Weight = weight;
             Description = description;
         }
-
+        public Mark(int id, decimal value, decimal weight, string? description) : this(value,weight, description)
+        {
+            Id = id;
+        }
+        public Mark(int id, decimal value, decimal weight) : this(value, weight)
+        {
+            Id = id;
+        }
         public Mark(decimal value, decimal weight) : this(value, weight, string.Empty) { }
         public Mark ShallowCopy()
         {

@@ -43,6 +43,7 @@ namespace SchoolAverageCalculator.Pages
             // if there is anything to manage
             if (!MyApp.MarksService.HasAnyItems())
             {
+                Console.Clear();
                 Console.WriteLine("You don't have any marks!");
                 InputManager.WaitForAnyKey();
                 return false;
