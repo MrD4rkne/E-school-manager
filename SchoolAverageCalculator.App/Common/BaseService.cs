@@ -24,11 +24,11 @@ namespace SchoolAverageCalculator.App.Common
 
         public bool RemoveItem(T item)
         {
-            if (!Items.Contains(item)) { 
+            if (!Items.Any(x=>x.Id==item.Id)) { 
                 return false; 
             }
 
-            Items.Remove(item);
+            Items.Remove(Items.Find(x=>x.Id==item.Id));
             return true;
         }
         public bool RemoveItem(int id)

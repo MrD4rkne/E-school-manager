@@ -16,7 +16,7 @@ namespace SchoolAverageCalculator.Pages
         public EditMarkPage(int id) { _markId = id; }
         public override string Title => "Edit mark";
 
-        public override string[] Options => new string[] {"Value","Weight","Description","Abort", "Save & Return"};
+        public override string[] Options => new string[] {"Value","Weight","Description","Delete","Abort", "Save & Return"};
 
         private Mark _mark;
 
@@ -45,9 +45,21 @@ namespace SchoolAverageCalculator.Pages
                     _mark.Description = InputManager.GetTextInput("New description: ", true);
                     break;
                 case 4:
+                    Console.Clear();
+                    bool isSuccess = MyApp.MarksService.RemoveItem( _mark );
+                    if (isSuccess)
+                    {
+                        Console.WriteLine("Success!");
+                    }
+                    else
+                        Console.WriteLine("Something went wrong.");
+                    InputManager.WaitForAnyKey();
                     MyApp.Navigation.GoBack();
                     return;
                 case 5:
+                    MyApp.Navigation.GoBack();
+                    return;
+                case 6:
                     MyApp.MarksService.UpdateItem(_mark);
                     MyApp.Navigation.GoBack();
                     return;
