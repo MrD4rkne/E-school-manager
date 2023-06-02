@@ -15,8 +15,10 @@ namespace SchoolAverageCalculator.App.Abstract
         bool RemoveItem(T item);
         bool RemoveItem(int id);
         bool UpdateItem(T item);
+        bool Exists(T item);
+        bool Exists(int id);
         bool HasAnyItems();
-        T GetItemById(int id);
+        T? GetItemById(int id);
 
     }
 }
