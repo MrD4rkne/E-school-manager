@@ -15,21 +15,21 @@ namespace SchoolAverageCalculator.App.Common
             Items = new List<T>();
         }
 
-        public int AddItem(T item)
+        public virtual int AddItem(T item)
         {
             item.Id = Items.Count; 
             Items.Add(item);
             return item.Id;
         }
 
-        public bool RemoveItem(T item)
+        public virtual bool RemoveItem(T item)
         {
             if (item == null)
                 return false;
             return RemoveItem(item.Id);
         }
 
-        public bool RemoveItem(int id)
+        public virtual bool RemoveItem(int id)
         {
             if (!Items.Any(x => x.Id == id))
             {
@@ -39,7 +39,7 @@ namespace SchoolAverageCalculator.App.Common
             return true;
         }
 
-        public bool UpdateItem(T item)
+        public virtual bool UpdateItem(T item)
         {
             var toEdit = Items.FirstOrDefault(x => x.Id == item.Id);
             if (toEdit == null)
@@ -49,14 +49,26 @@ namespace SchoolAverageCalculator.App.Common
             return true;
         }
 
-        public bool HasAnyItems()
+        public virtual bool HasAnyItems()
         {
             return Items != null && Items.Any();
         }
 
-        public T GetItemById(int id)
+        public virtual T? GetItemById(int id)
         {
             return Items.FirstOrDefault(x => x.Id == id);
+        }
+
+        public virtual bool Exists(T item)
+        {
+            if (item == null || item.Id==null)
+                return false;
+            return Exists(item.Id);
+        }
+
+        public virtual bool Exists(int id)
+        {
+            return GetItemById(id) != null;
         }
     }
 }

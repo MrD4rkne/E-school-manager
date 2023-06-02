@@ -78,7 +78,7 @@ namespace SchoolAverageCalculator.App.Helpers
             string? input;
 
             input = Console.ReadLine();
-            while (!canBeEmpty)
+            while (!canBeEmpty && string.IsNullOrEmpty(input))
             {
                 input = Console.ReadLine();
             }
@@ -97,6 +97,7 @@ namespace SchoolAverageCalculator.App.Helpers
         {
             decimal ret;
             string? input;
+
             Console.Write(message);
             input = Console.ReadLine();
             while (!decimal.TryParse(input, out ret) || ret < min || ret > max)
@@ -124,6 +125,7 @@ namespace SchoolAverageCalculator.App.Helpers
         {
             decimal ret;
             string? input;
+
             Console.Write(message);
             input = Console.ReadLine();
             while (!decimal.TryParse(input, out ret))

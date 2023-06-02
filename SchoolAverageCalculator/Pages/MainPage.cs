@@ -15,7 +15,7 @@ namespace SchoolAverageCalculator.Pages
 
         public override string Title => "Main menu";
 
-        public override string[] Options => new string[]{"See summary", "Add new mark", "Manage existing marks", "Close app"};
+        public override string[] Options => new string[]{"Students", "Teachers", "Subjects", "Close app"};
 
         public override void HandleChoice(int option)
         {
@@ -24,13 +24,13 @@ namespace SchoolAverageCalculator.Pages
                 default: base.HandleChoice(option);
                     return;
                 case 1:
-                    MyApp.Navigation.GoTo(new SummaryPage());
+                    MyApp.Navigation.GoTo(new Students.MenuStudentsPage());
                     break;
                 case 2:
-                    MyApp.Navigation.GoTo(new AddMarkPage());
+                    MyApp.Navigation.GoTo(new Teachers.MenuTeachersPage());
                     break;
                 case 3:
-                    MyApp.Navigation.GoTo(new ManageMarksPage());
+                    MyApp.Navigation.GoTo(new Subjects.MenuSubjectsPage());
                     break;
                 case 4:
                     Console.Clear();
@@ -40,11 +40,6 @@ namespace SchoolAverageCalculator.Pages
                     Environment.Exit(0);
                     break;
             }
-        }
-
-        public override bool Prepare()
-        {
-            return true;
         }
     }
 }

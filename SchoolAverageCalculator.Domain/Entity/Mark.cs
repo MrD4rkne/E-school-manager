@@ -12,27 +12,18 @@ namespace SchoolAverageCalculator.Domain.Entity
         public decimal Value { get; set; }
         public decimal Weight { get; set; }
         public string? Description { get; set; }
+        public int SubjectId { get; set; }
+        public int StudentId { get; set; }
 
-        public Mark(decimal value, decimal weight, string? description)
+        public Mark(int studentId, int subjectId, decimal value, decimal weight, string? description)
         {
+            StudentId = studentId;
+            SubjectId = subjectId;
             Value = value;
             Weight = weight;
             Description = description;
         }
-        public Mark(int id, decimal value, decimal weight, string? description) : this(value,weight, description)
-        {
-            Id = id;
-        }
-        public Mark(int id, decimal value, decimal weight) : this(value, weight)
-        {
-            Id = id;
-        }
-        public Mark(decimal value, decimal weight) : this(value, weight, string.Empty) { }
-        public Mark ShallowCopy()
-        {
-            return (Mark)this.MemberwiseClone();
-        }
-
+        public Mark(int studentId, int subjectId, decimal value, decimal weight) : this(studentId, subjectId, value, weight, string.Empty) { }
         public override string ToString()
         {
             return $"Value: {Value} Weight: {Weight} Description: \"{Description}\"";

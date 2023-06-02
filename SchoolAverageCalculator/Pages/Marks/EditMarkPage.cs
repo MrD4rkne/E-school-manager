@@ -8,15 +8,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SchoolAverageCalculator.Pages
+namespace SchoolAverageCalculator.Pages.Marks
 {
     public class EditMarkPage : MenuPage
     {
         private int _markId;
         public EditMarkPage(int id) { _markId = id; }
-        public override string Title => "Edit mark";
+        public override string Title => "Edit";
 
-        public override string[] Options => new string[] {"Value","Weight","Description","Delete","Abort", "Save & Return"};
+        public override string[] Options => new string[] { "Value", "Weight", "Description", "Delete", "Abort", "Save & Return" };
 
         private Mark _mark;
 
@@ -36,17 +36,17 @@ namespace SchoolAverageCalculator.Pages
                     base.HandleChoice(option);
                     return;
                 case 1:
-                    _mark.Value = InputManager.GetDecimalInput("New value: ");
+                    _mark.Value = InputManager.GetDecimalInput("New value*: ");
                     break;
                 case 2:
-                    _mark.Weight = InputManager.GetDecimalInput("New weight: ");
+                    _mark.Weight = InputManager.GetDecimalInput("New weight*: ");
                     break;
                 case 3:
                     _mark.Description = InputManager.GetTextInput("New description: ", true);
                     break;
                 case 4:
                     Console.Clear();
-                    bool isSuccess = MyApp.MarksService.RemoveItem( _mark );
+                    bool isSuccess = MyApp.DataService.MarksService.RemoveItem(_mark);
                     if (isSuccess)
                     {
                         Console.WriteLine("Success!");
@@ -54,14 +54,11 @@ namespace SchoolAverageCalculator.Pages
                     else
                         Console.WriteLine("Something went wrong.");
                     InputManager.WaitForAnyKey();
-                    MyApp.Navigation.GoBack(true);
                     return;
                 case 5:
-                    MyApp.Navigation.GoBack();
                     return;
                 case 6:
-                    MyApp.MarksService.UpdateItem(_mark);
-                    MyApp.Navigation.GoBack(true);
+                    MyApp.DataService.MarksService.UpdateItem(_mark);
                     return;
             }
             MyApp.Navigation.RefreshPage();
@@ -69,14 +66,12 @@ namespace SchoolAverageCalculator.Pages
 
         public override bool Prepare()
         {
-            _mark = MyApp.MarksService.WithId(_markId).ShallowCopy();
-            if (_mark == null)
+            var mark = MyApp.DataService.MarksService.GetItemById(_markId);
+            if (mark == null)
             {
-                Console.WriteLine("Mark doesn't exist");
-                InputManager.WaitForAnyKey();
-                MyApp.Navigation.GoBack();
-                return false;
+                throw new InvalidDataException("Mark doesn't exist");
             }
+            _mark = (Mark)mark.ShallowCopy();
             return true;
         }
     }

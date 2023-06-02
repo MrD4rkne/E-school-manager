@@ -1,4 +1,5 @@
 ﻿using SchoolAverageCalculator.App.Abstract;
+using SchoolAverageCalculator.App.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,13 +33,27 @@ namespace SchoolAverageCalculator.App.Concrete
             Console.Title = GetFullRoute();
             if (refreshData)
             {
-                if (page.Prepare())
-                    page.Draw();
-                else
-                    GoBack();
+                try
+                {
+                    if (page.Prepare())
+                        page.Draw();
+                }
+                catch(InvalidDataException invEx) {
+                    Console.Clear();
+                    Console.WriteLine(invEx.Message);
+                    InputManager.WaitForAnyKey();
+                }             
+                catch(Exception ex)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Something went wrong :(");
+                    Console.WriteLine(ex.Message);
+                    InputManager.WaitForAnyKey();
+                }
             }
             else
                 page.Draw();
+            GoBack();
         }
         /// <summary>
         /// Navigate backwards, take last Page from Stack
