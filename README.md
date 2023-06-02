@@ -1,28 +1,40 @@
-# SchoolAverageCalculator
+# E-school manager
 [PL]
-Główną funkcją aplikacji jest obliczanie średniej z ocen w szkole. Użytkownik wprowadza oceny do programu, może je dodawać, usuwać i zmieniać.
-Zamysł aplikacji jest z braku pomysłu, nie wiedziałem jaki projekt mogę stworzyć, by móc wykorzystać wiedzę z kursu.
+Main purpose of this app is school management. 
+User can add, manage and delete entities: Students, Teachers, Marks, Subjects.
 
-SCHEMAT APLIKACJI
+For now (week4), app DOES NOT SAVE data after being closed.
+This feature is due to be added in the near future.
 
-MainPage
 
-    1. See summary - SummaryPage - wyświetla średnią ważoną i listę ocen
-    2. Add new mark - AddMarkPage - proces dodawania nowej oceny (wartość, waga i ewentualny opis)
-    3. Manage existing marks - wybór oceny do zarządzanie, potme zmienianie lub usuwanie
-    4. Close app - zamyka aplikację
 
-NAWIGACJA
+## Usage/Examples
 
-Moim pomysłem na utrudnienie sobie zadanie było dodanie podziału na pliki i dodanie nawigacji (NavigationService) coś na wzór stosu.
+### Main menu
+```
+Choose what to do:
+1. Students
+2. Teachers
+3. Subjects
+4. Close app 
+```
 
-    1. Navigation.GoTo(Page) przenosi na stronę;
-    2. Navigation.GoBack() usuwa najnowszą stronę i powraca do poprzedniej;
-    3. Navigation.RefreshPage() odświeża aktualnie wyświetloną stronę (na nowo ją rysuje);
+Points: 1-3. navigates you to manage certain entities; 4. closes the app 
+### Submenus
+```
+Choose what to do:
+1. List
+2. Add
+3. Manage
+4. Return
+```
+- List - list all the entities, give full info when entity is selected
+- Add - navigate to creating page
+- Manage - list all the entities, display edit menu when entity is selected
 
-Hierarchia Stron
+### Adding marks
+You can add marks either in 
++ Subjects -> Manage -> (entity) -> Marks
+or
++ Marks -> Manage -> (entity) -> Marks
 
-    1. IConsolePage (nadrzędny interfejs)
-    2.  BasePage (każda strona)
-    3.      ActionPage (strona do akcji) - służy do wykonywania akcji, klasa pochodna MUSI zamimplementowac metodę Action()
-    4.      MenuPage (strona menu) - służy do wyświetlenia menu opcji i decyzji co dalej wykonać
