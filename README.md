@@ -34,6 +34,8 @@ Choose what to do:
 ### Adding marks
 You can add marks either in 
 + Subjects -> Manage -> (entity) -> Marks
+
 or
+
 + Marks -> Manage -> (entity) -> Marks
 
