@@ -1,5 +1,4 @@
 # E-school manager
-[PL]
 Main purpose of this app is school management. 
 User can add, manage and delete entities: Students, Teachers, Marks, Subjects.
 
