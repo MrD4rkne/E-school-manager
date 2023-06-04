@@ -1,4 +1,5 @@
 ﻿using SchoolAverageCalculator.App.Common;
+using SchoolAverageCalculator.App.Helpers;
 using SchoolAverageCalculator.Domain.Entity;
 using SchoolAverageCalculator.Domain.ViewModel;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 namespace SchoolAverageCalculator.App.Concrete
 {
     /// <summary>
-    /// Main service mering all data-services
+    /// Main service merging all data-services
     /// </summary>
     public class DataService
     {
@@ -33,7 +34,7 @@ namespace SchoolAverageCalculator.App.Concrete
         }
 
         /// <summary>
-        /// Get view model for student (basic data + marks)
+        /// Get view model for student (basic data + marks).
         /// </summary>
         /// <param name="id">Student's id</param>
         /// <returns>View model</returns>
@@ -53,7 +54,7 @@ namespace SchoolAverageCalculator.App.Concrete
             return studentVM;
         }
         /// <summary>
-        /// Get view model for subject (basic info + student with marks)
+        /// Get view model for subject (basic info + student with marks).
         /// </summary>
         /// <param name="id">Subject's id</param>
         /// <returns></returns>
@@ -72,7 +73,7 @@ namespace SchoolAverageCalculator.App.Concrete
         }
 
         /// <summary>
-        /// Get existing student's averages, who has at least one mark from subject
+        /// Get existing student's averages, who has at least one mark from subject.
         /// </summary>
         /// <param name="subjectId">Subject's id</param>
         /// <returns>Tally of students and their averages from subject</returns>
@@ -92,9 +93,75 @@ namespace SchoolAverageCalculator.App.Concrete
             return ret.ToArray();
         }
 
-        public StudentVM GetTeacherVM(int id)
+        public TeacherVM? GetTeacherVM(int id)
         {
-            throw new NotImplementedException();
+            Teacher? obj = TeachersService.GetItemById(id);
+
+            if (obj == null)
+                return null;
+            TeacherVM vm = new(obj.FirstName, obj.MiddleName, obj.LastName, SubjectsService.GetSubjectsForTeacher(id).ToList());
+            return vm;
         }
+
+        #region SavingData
+
+        /// <summary>
+        /// Save data from each services to files.
+        /// </summary>
+        /// <param name="directory">Directory where files shoul dbe created</param>
+        /// <param name="type">Type of serializator</param>
+        public void SaveData(string directory, SerializerType type)
+        {
+            string studentsFile = Path.Combine(directory, "students" + FileManager.GetProperExtension(type));
+            FileManager.SaveToFile(StudentsService.Items, studentsFile, type);
+
+            string teachersFile = Path.Combine(directory, "teachers" + FileManager.GetProperExtension(type));
+            FileManager.SaveToFile(TeachersService.Items, teachersFile, type);
+
+            string subjectsFile = Path.Combine(directory, "subjects" + FileManager.GetProperExtension(type));
+            FileManager.SaveToFile(SubjectsService.Items, subjectsFile, type);
+
+            string marksFile = Path.Combine(directory, "marks" + FileManager.GetProperExtension(type));
+            FileManager.SaveToFile(MarksService.Items, marksFile, type);
+        }
+        /// <summary>
+        /// Load data from files.
+        /// </summary>
+        /// <param name="directory">Directory with saved files</param>
+        /// <param name="type">Type of serializator</param>
+        public void LoadData(string directory, SerializerType type)
+        {
+            string studentsFile = Path.Combine(directory, "students" + FileManager.GetProperExtension(type));
+            var students = FileManager.LoadFromFile<List<Student>>(studentsFile, type);
+            if (students != null)
+                StudentsService.Items = students;
+
+            string teachersFile = Path.Combine(directory, "teachers" + FileManager.GetProperExtension(type));
+            var teachers = FileManager.LoadFromFile<List<Teacher>>(teachersFile, type);
+            if (teachers != null)
+                TeachersService.Items = teachers;
+
+            string subjectsFile = Path.Combine(directory, "subjects" + FileManager.GetProperExtension(type));
+            var subjects = FileManager.LoadFromFile<List<Subject>>(subjectsFile, type);
+            if (subjects != null)
+                SubjectsService.Items = subjects;
+
+            string marksFile = Path.Combine(directory, "marks" + FileManager.GetProperExtension(type));
+            var marks = FileManager.LoadFromFile<List<Mark>>(marksFile, type);
+            if (marks != null)
+                MarksService.Items = marks;
+        }
+        #endregion
+        /// <summary>
+        /// Clear data from each of services.
+        /// </summary>
+        public void ClearData()
+        {
+            MarksService.Items.Clear();
+            TeachersService.Items.Clear();
+            SubjectsService.Items.Clear();
+            StudentsService.Items.Clear();
+        }
+
     }
 }

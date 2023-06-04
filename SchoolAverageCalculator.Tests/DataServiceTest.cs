@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Moq;
 using SchoolAverageCalculator.App.Concrete;
+using SchoolAverageCalculator.App.Helpers;
 using SchoolAverageCalculator.Domain.Entity;
 using SchoolAverageCalculator.Domain.ViewModel;
 using Xunit;
@@ -151,6 +152,112 @@ namespace SchoolAverageCalculator.Tests
 
             averages3.Should().NotBeNull();
             averages3.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void GetTeacherVM()
+        {
+            // Arrange
+            // Arrange teacher
+            DataService dataService = new DataService();
+            int teacherId = dataService.TeachersService.AddItem(new Teacher("First", "Middle", "Last"));
+            // Arrange subjects
+            Subject[] subjects = new Subject[] { new Subject("Biology", teacherId), new Subject("Math", teacherId), new Subject("PE") };
+            dataService.SubjectsService.AddItem(subjects[0]);
+            dataService.SubjectsService.AddItem(subjects[1]);
+            dataService.SubjectsService.AddItem(subjects[2]);
+
+            // Action
+            var teacherVM = dataService.GetTeacherVM(teacherId);
+
+            // Asert
+            teacherVM.Should().BeOfType<TeacherVM>();
+            teacherVM.Should().NotBeNull();
+            teacherVM.Subjects.Should().NotBeNull();
+            teacherVM.Subjects.Count.Should().Be(2);
+
+            teacherVM.FirstName.Should().Be("First");
+            teacherVM.MiddleName.Should().Be("Middle");
+            teacherVM.LastName.Should().Be("Last");
+
+            teacherVM.Subjects.Should().Contain(subjects[0]);
+            teacherVM.Subjects.Should().Contain(subjects[1]);
+            teacherVM.Subjects.Should().NotContain(subjects[2]);
+        }
+
+        [Fact]
+        public void CSVSaveLoad()
+        {
+            SaveLoadData(SerializerType.CSV);
+        }
+        [Fact]
+        public void JSONSaveLoad()
+        {
+            SaveLoadData(SerializerType.JSON);
+        }
+        [Fact]
+        public void XMLSaveLoad()
+        {
+            SaveLoadData(SerializerType.XML);
+        }
+        public void SaveLoadData(SerializerType type)
+        {
+            // Arrange
+            DataService dataService = new DataService();
+
+            Student student = new Student("NAME", "SURNAME");
+            Teacher teacher = new("BIOLOGY", "ONE", "TEACHER");
+            int studentId = dataService.StudentsService.AddItem(student);
+            int teacherId = dataService.TeachersService.AddItem(teacher);
+            Subject subject = new Subject("Biology", teacherId);
+            int subjectId = dataService.SubjectsService.AddItem(subject);
+            Mark mark1 = new(studentId, subjectId, 100, 20);
+            Mark mark2 = new(studentId, subjectId, 50, 60);
+            dataService.MarksService.AddItem(mark1);
+            dataService.MarksService.AddItem(mark2);
+
+            // Action
+
+            dataService.SaveData(FileManager.GetFolder(), type);
+            dataService.ClearData();
+            dataService.LoadData(FileManager.GetFolder(), type);
+
+            // Assert
+
+            dataService.MarksService.Items.Should().Contain(mark1);
+            dataService.MarksService.Items.Should().Contain(mark2);
+            dataService.StudentsService.Items.Should().Contain(student);
+            dataService.SubjectsService.Items.Should().Contain(subject);
+            dataService.TeachersService.Items.Should().Contain(teacher);
+
+        }
+
+        [Fact]
+        public void ClearData()
+        {
+            // Arrange
+            DataService dataService = new DataService();
+
+            Student student = new Student("NAME", "SURNAME");
+            Teacher teacher = new("BIOLOGY", "ONE", "TEACHER");
+            int studentId = dataService.StudentsService.AddItem(student);
+            int teacherId = dataService.TeachersService.AddItem(teacher);
+            Subject subject = new Subject("Biology", teacherId);
+            int subjectId = dataService.SubjectsService.AddItem(subject);
+            Mark mark1 = new(studentId, subjectId, 100, 20);
+            Mark mark2 = new(studentId, subjectId, 50, 60);
+            dataService.MarksService.AddItem(mark1);
+            dataService.MarksService.AddItem(mark2);
+
+            // Action
+            dataService.ClearData();
+
+            // Assert
+
+            dataService.MarksService.Items.Should().BeEmpty();
+            dataService.StudentsService.Items.Should().BeEmpty();
+            dataService.TeachersService.Items.Should().BeEmpty();
+            dataService.SubjectsService.Items.Should().BeEmpty();
         }
     }
 }

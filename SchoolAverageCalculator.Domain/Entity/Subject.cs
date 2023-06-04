@@ -18,9 +18,22 @@ namespace SchoolAverageCalculator.Domain.Entity
         }
         public Subject(string name) : this(name, null) { }
 
+        /// <summary>
+        /// Only for serialization
+        /// </summary>
+        public Subject() { }
+
         public override string ToString()
         {
             return Name;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if(obj == null) return false;
+            if(obj.GetType() != typeof(Subject)) return false;
+            Subject toCompare = (Subject)obj;
+            return (toCompare.Name == Name && toCompare.TeacherId == TeacherId);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace SchoolAverageCalculator.Pages
 
         public override string Title => "Main menu";
 
-        public override string[] Options => new string[]{"Students", "Teachers", "Subjects", "Close app"};
+        public override string[] Options => new string[]{"Students", "Teachers", "Subjects", "Settings","Close app"};
 
         public override void HandleChoice(int option)
         {
@@ -33,6 +33,9 @@ namespace SchoolAverageCalculator.Pages
                     MyApp.Navigation.GoTo(new Subjects.MenuSubjectsPage());
                     break;
                 case 4:
+                    MyApp.Navigation.GoTo(new Settings.SettingsPage());
+                    break;
+                case 5:
                     Console.Clear();
                     Console.WriteLine("Closing...");
                     Console.WriteLine("Have a nice day!");

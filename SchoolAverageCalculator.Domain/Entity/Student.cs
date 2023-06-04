@@ -15,5 +15,17 @@ namespace SchoolAverageCalculator.Domain.Entity
         public Student(string firstName, string? middleName, string lastName) : base(firstName, middleName,lastName)
         {
         }
+        /// <summary>
+        /// Only for serialization
+        /// </summary>
+        public Student() { }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null) return false;
+            if (obj.GetType() != typeof(Student)) return false;
+            Student toCompare = (Student)obj;
+            return (toCompare.Id == Id && toCompare.FirstName == FirstName && toCompare.MiddleName == MiddleName && toCompare.LastName == LastName);
+        }
     }
 }
