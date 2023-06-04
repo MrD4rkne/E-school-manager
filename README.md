@@ -2,8 +2,7 @@
 Main purpose of this app is school management. 
 User can add, manage and delete entities: Students, Teachers, Marks, Subjects.
 
-For now (week4), app DOES NOT SAVE data after being closed.
-This feature is due to be added in the near future.
+Saving is optional and needs to be done  by user. In settings there are options for managing saves.
 
 
 
