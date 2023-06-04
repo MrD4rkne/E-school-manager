@@ -1,4 +1,6 @@
-﻿using SchoolAverageCalculator.Domain.Common;
+﻿using Newtonsoft.Json.Linq;
+using SchoolAverageCalculator.Domain.Common;
+using SchoolAverageCalculator.Domain.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,19 @@ namespace SchoolAverageCalculator.Domain.Entity
         }
         public Teacher(string firstName, string lastName) : base(firstName, lastName)
         {
+        }
+
+        /// <summary>
+        /// Only for serialization
+        /// </summary>
+        public Teacher() { }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null) return false;
+            if (obj.GetType() != typeof(Teacher)) return false;
+            Teacher toCompare = (Teacher)obj;
+            return (toCompare.Id == Id && toCompare.FirstName == FirstName && toCompare.MiddleName == MiddleName && toCompare.LastName == LastName);
         }
     }
 }

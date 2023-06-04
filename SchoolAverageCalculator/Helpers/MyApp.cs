@@ -37,10 +37,26 @@ namespace SchoolAverageCalculator.Helpers
                 _dataService = value;
             }
         }
+
+        private static SettingsService _settingsService;
+        public static SettingsService SettingsService
+        {
+            get
+            {
+                if (_navigation == null)
+                    throw new NotImplementedException("Settins' service has not been initialized!");
+                return _settingsService;
+            }
+            private set
+            {
+                _settingsService = value;
+            }
+        }
         public static void Initialize()
         {
             Navigation = new NavigationService();
             DataService = new DataService();
+            SettingsService = new SettingsService();
         }
     }
 }

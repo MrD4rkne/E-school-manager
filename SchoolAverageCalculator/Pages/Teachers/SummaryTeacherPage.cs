@@ -16,7 +16,7 @@ namespace SchoolAverageCalculator.Pages.Teachers
         public override string Title => "Summary";
         private int _id = -1;
 
-        private StudentVM _teacher;
+        private TeacherVM _teacher;
 
         public SummaryTeacherPage(int studentId)
         {

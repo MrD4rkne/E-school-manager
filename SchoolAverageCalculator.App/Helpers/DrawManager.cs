@@ -93,5 +93,10 @@ namespace SchoolAverageCalculator.App.Helpers
         //{
         //    return DrawMenu(message, menuService.GetOptionsByMenuTitle(menuTitle));
         //}
+
+        public static bool ConfirmationMenu(string message)
+        {
+            return DrawMenu(message, new string[] { "Confirm", "Abort" }) == 1;
+        }
     }
 }

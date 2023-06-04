@@ -1,9 +1,11 @@
 ﻿using SchoolAverageCalculator.Domain.Common;
+using SchoolAverageCalculator.Domain.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace SchoolAverageCalculator.Domain.Entity
 {
@@ -14,6 +16,12 @@ namespace SchoolAverageCalculator.Domain.Entity
         public string? Description { get; set; }
         public int SubjectId { get; set; }
         public int StudentId { get; set; }
+
+        /// <summary>
+        /// Only for serialization
+        /// </summary>
+        public Mark() { }
+
 
         public Mark(int studentId, int subjectId, decimal value, decimal weight, string? description)
         {
@@ -27,6 +35,14 @@ namespace SchoolAverageCalculator.Domain.Entity
         public override string ToString()
         {
             return $"Value: {Value} Weight: {Weight} Description: \"{Description}\"";
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null) return false;
+            if (obj.GetType() != typeof(Mark)) return false;
+            Mark toCompare = (Mark)obj;
+            return (toCompare.Id == Id && toCompare.Value == Value && toCompare.Weight == Weight && (toCompare.Description == Description || (string.IsNullOrEmpty(toCompare.Description) && string.IsNullOrEmpty(Description))) && toCompare.StudentId == StudentId && toCompare.SubjectId == SubjectId);
         }
 
     }
