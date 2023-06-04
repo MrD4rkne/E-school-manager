@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SchoolAverageCalculator.App.Helpers;
-using Microsoft.Extensions.Configuration;
 using SchoolAverageCalculator.App.Common;
 
 namespace SchoolAverageCalculator.App.Concrete

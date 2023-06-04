@@ -2,7 +2,6 @@
 using SchoolAverageCalculator.App.Concrete;
 using SchoolAverageCalculator.Domain.Entity;
 using SchoolAverageCalculator.Pages;
-using Microsoft.Extensions.Configuration;
 
 namespace SchoolAverageCalculator
 {
