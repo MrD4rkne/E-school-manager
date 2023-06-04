@@ -122,7 +122,7 @@ namespace SchoolAverageCalculator.App.Helpers
                 case SerializerType.CSV:
                     return ".csv";
                 case SerializerType.JSON: 
-                    return "json";
+                    return ".json";
                 case SerializerType.XML:
                     return ".xml";
                 default:
