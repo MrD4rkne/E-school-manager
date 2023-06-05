@@ -12,9 +12,29 @@ namespace SchoolAverageCalculator.Pages.Students
 {
     public class EditStudentPage : MenuPage
     {
+        private int _studentId;
+
+        private Student _student;
+
         public override string Title => "Edit";
 
         public override string[] Options => new string[] { "First Name", "Middle Name", "Last Name", "Save & Return", "Abort & Return", "Marks", "Delete" };
+
+        public EditStudentPage(int id)
+        {
+            _studentId = id;
+        }
+
+        public override bool Prepare()
+        {
+            var student = MyApp.DataService.StudentsService.GetItemById(_studentId);
+            if (student == null)
+            {
+                throw new InvalidDataException("Student doesn't exist");
+            }
+            _student = (Student)student.ShallowCopy();
+            return true;
+        }
 
         public override void Action()
         {
@@ -61,23 +81,6 @@ namespace SchoolAverageCalculator.Pages.Students
                     return;
             }
             MyApp.Navigation.RefreshPage();
-        }
-        private int _studentId;
-        private Student _student;
-        public EditStudentPage(int id)
-        {
-            _studentId = id;
-        }
-
-        public override bool Prepare()
-        {
-            var student = MyApp.DataService.StudentsService.GetItemById(_studentId);
-            if (student == null)
-            {
-                throw new InvalidDataException("Student doesn't exist");
-            }
-            _student = (Student)student.ShallowCopy();
-            return true;
         }
     }
 }

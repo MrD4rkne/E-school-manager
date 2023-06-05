@@ -9,7 +9,8 @@ namespace SchoolAverageCalculator.Helpers
 {
     public static class MyApp
     {
-        private static NavigationService _navigation;
+        private static NavigationService? _navigation;
+
         public static NavigationService Navigation
         {
             get
@@ -23,12 +24,14 @@ namespace SchoolAverageCalculator.Helpers
                 _navigation = value;
             }
         }
-        private static DataService _dataService;
+
+        private static DataService? _dataService;
+
         public static DataService DataService
         {
             get
             {
-                if (_navigation == null)
+                if (_dataService == null)
                     throw new NotImplementedException("Marks' service has not been initialized!");
                 return _dataService;
             }
@@ -38,12 +41,13 @@ namespace SchoolAverageCalculator.Helpers
             }
         }
 
-        private static SettingsService _settingsService;
+        private static SettingsService? _settingsService;
+
         public static SettingsService SettingsService
         {
             get
             {
-                if (_navigation == null)
+                if (_settingsService == null)
                     throw new NotImplementedException("Settins' service has not been initialized!");
                 return _settingsService;
             }
@@ -52,6 +56,7 @@ namespace SchoolAverageCalculator.Helpers
                 _settingsService = value;
             }
         }
+
         public static void Initialize()
         {
             Navigation = new NavigationService();

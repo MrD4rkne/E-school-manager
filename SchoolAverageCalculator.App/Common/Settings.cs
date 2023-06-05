@@ -13,10 +13,12 @@ namespace SchoolAverageCalculator.App.Common
     {
         [DataMember]
         public SerializerType SerializerType;
+
         public Settings()
         {
             SerializerType = SerializerType.XML;
         }
+
         public Settings(SerializerType serializerType)
         {
             SerializerType = serializerType;

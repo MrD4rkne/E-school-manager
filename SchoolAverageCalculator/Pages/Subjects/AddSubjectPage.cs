@@ -13,6 +13,7 @@ namespace SchoolAverageCalculator.Pages.Subjects
     public class AddSubjectPage : ActionPage
     {
         public override string Title => "Add";
+
         public override void Action()
         {
             Console.WriteLine("Please enter subject's properties:");

@@ -13,12 +13,25 @@ namespace SchoolAverageCalculator.Pages.Subjects
     public class ListSubjectsPage : ActionPage
     {
         private ViewMode _viewMode;
-        public override string Title => Enum.GetName(typeof(ViewMode), _viewMode);
 
+        public override string Title => Enum.GetName(typeof(ViewMode), _viewMode);
 
         public ListSubjectsPage(ViewMode viewMode) : base()
         {
             _viewMode = viewMode;
+        }
+
+        public override bool Prepare()
+        {
+            if (MyApp.DataService.SubjectsService == null)
+            {
+                throw new InvalidDataException("SubjectsService isn't initialized!");
+            }
+            if (!MyApp.DataService.SubjectsService.HasAnyItems())
+            {
+                throw new InvalidDataException("There aren't any registered subjects!");
+            }
+            return true;
         }
 
         public override void Action()
@@ -40,19 +53,6 @@ namespace SchoolAverageCalculator.Pages.Subjects
                     MyApp.Navigation.GoTo(new Subjects.EditSubjectPage(input2.Id));
                     return;
             }
-        }
-
-        public override bool Prepare()
-        {
-            if (MyApp.DataService.SubjectsService == null)
-            {
-                throw new InvalidDataException("SubjectsService isn't initialized!");
-            }
-            if (!MyApp.DataService.SubjectsService.HasAnyItems())
-            {
-                throw new InvalidDataException("There aren't any registered subjects!");
-            }
-            return true;
         }
     }
     public enum ViewMode { List, Manage };

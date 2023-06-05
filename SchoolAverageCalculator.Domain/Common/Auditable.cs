@@ -13,10 +13,13 @@ namespace SchoolAverageCalculator.Domain.Common
     {
         [IgnoreDataMember]
         public int CreatedBy { get; set; }
+
         [IgnoreDataMember]
         public DateTime CreatedDateTime { get; set; }
+
         [IgnoreDataMember]
         public int? EditedBy { get; set; }
+
         [IgnoreDataMember]
         public DateTime? EditedDateTime { get; set; }
     }

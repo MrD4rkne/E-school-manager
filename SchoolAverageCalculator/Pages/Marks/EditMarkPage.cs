@@ -13,12 +13,17 @@ namespace SchoolAverageCalculator.Pages.Marks
     public class EditMarkPage : MenuPage
     {
         private int _markId;
-        public EditMarkPage(int id) { _markId = id; }
+
         public override string Title => "Edit";
 
         public override string[] Options => new string[] { "Value", "Weight", "Description", "Delete", "Abort", "Save & Return" };
 
         private Mark _mark;
+
+        public EditMarkPage(int id) 
+        { 
+            _markId = id; 
+        }
 
         public override void Action()
         {
@@ -28,6 +33,7 @@ namespace SchoolAverageCalculator.Pages.Marks
             Console.WriteLine($"Description: {_mark.Description}");
             Console.WriteLine();
         }
+
         public override void HandleChoice(int option)
         {
             switch (option)

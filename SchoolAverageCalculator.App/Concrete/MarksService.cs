@@ -18,6 +18,7 @@ namespace SchoolAverageCalculator.App.Concrete
         {
             return GetAverage(Items);
         }
+
         /// <summary>
         /// Count average for list of Marks
         /// </summary>
@@ -79,13 +80,15 @@ namespace SchoolAverageCalculator.App.Concrete
         {
             return GetStudentMarks(studentId).Where(x=>x.SubjectId==subjectId).ToList();
         }
+
+        /// <summary>
+        /// Get all marks for subject
+        /// </summary>
+        /// <param name="subjectId">Subject's id</param>
+        /// <returns>List of marks or empty if there are not any</returns>
         public List<Mark> GetSubjectMarks(int subjectId)
         {
             return Items.Where(x=>x.SubjectId==subjectId).ToList();
         }
-        //public Mark? WithId(int id)
-        //{
-        //    return Items.FirstOrDefault(x => x.Id == id);
-        //}
     }
 }

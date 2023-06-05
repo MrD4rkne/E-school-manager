@@ -16,6 +16,25 @@ namespace SchoolAverageCalculator.Pages.Subjects
 
         public override string[] Options => new string[] { "Name", "Teacher", "Save & Return", "Abort & Return", "Marks","Delete" };
 
+        private int _subjectId;
+
+        private Subject _subject;
+        public EditSubjectPage(int id)
+        {
+            _subjectId = id;
+        }
+
+        public override bool Prepare()
+        {
+            var subject = MyApp.DataService.SubjectsService.GetItemById(_subjectId);
+            if (subject == null)
+            {
+                throw new InvalidDataException("Subject doesn't exist");
+            }
+            _subject = (Subject)subject.ShallowCopy();
+            return true;
+        }
+
         public override void Action()
         {
             Console.WriteLine($"Name: {_subject.Name}");
@@ -73,23 +92,6 @@ namespace SchoolAverageCalculator.Pages.Subjects
                     return;
             }
             MyApp.Navigation.RefreshPage();
-        }
-        private int _subjectId;
-        private Subject _subject;
-        public EditSubjectPage(int id)
-        {
-            _subjectId = id;
-        }
-
-        public override bool Prepare()
-        {
-            var subject = MyApp.DataService.SubjectsService.GetItemById(_subjectId);
-            if (subject == null)
-            {
-                throw new InvalidDataException("Subject doesn't exist");
-            }
-            _subject = (Subject)subject.ShallowCopy();
-            return true;
         }
     }
 }

@@ -12,8 +12,11 @@ namespace SchoolAverageCalculator.Domain.Common
     {
         [DataMember(Name ="FirstName")]
         public string FirstName { get; set; }
+
         public string? MiddleName { get; set; }
+
         public string LastName { get; set; }
+
 
         /// <summary>
         /// Only for serialization
@@ -26,25 +29,32 @@ namespace SchoolAverageCalculator.Domain.Common
             MiddleName = middleName;
             LastName = lastName;
         }
+
         public Person(string firstName, string lastName) : this(firstName, null, lastName) { }
+
+        public string GetFullName()
+        {
+            string fullName = FirstName + " ";
+            if (!string.IsNullOrEmpty(MiddleName))
+            {
+                fullName += MiddleName + " ";
+            }
+            fullName += LastName;
+
+            return fullName;
+        }
 
         public override string ToString()
         {
-            string ret = FirstName + " ";
-            if (!string.IsNullOrEmpty(MiddleName))
-            {
-                ret += MiddleName + " ";
-            }
-            ret += LastName;
-
-            return ret;
+            return GetFullName();
         }
+
         public override bool Equals(object? obj)
         {
             if (obj == null) return false;
             if (obj.GetType() != typeof(Person)) return false;
-            Person toCompare = (Person)obj;
-            return (toCompare.Id == Id && toCompare.FirstName == FirstName && toCompare.MiddleName == MiddleName && toCompare.LastName == LastName);
+            Person comparedPerson = (Person)obj;
+            return (comparedPerson.Id == Id && comparedPerson.FirstName == FirstName && comparedPerson.MiddleName == MiddleName && comparedPerson.LastName == LastName);
         }
     }
 }

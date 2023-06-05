@@ -13,8 +13,31 @@ namespace SchoolAverageCalculator.Pages.Marks
 {
     public class AddMarkPage : ActionPage
     {
+        private int? _subjectId;
+        private int? _studentId;
 
         public override string Title => "Add mark";
+
+        public AddMarkPage(int? subjectId, int? studentId)
+        {
+            _subjectId = subjectId;
+            _studentId = studentId;
+        }
+
+        public override bool Prepare()
+        {
+            if (_subjectId == null || !MyApp.DataService.SubjectsService.Exists(_subjectId.Value))
+            {
+                throw new InvalidDataException("Subject's id is invalid!");
+            }
+            if (_studentId == null || !MyApp.DataService.StudentsService.Exists(_studentId.Value))
+            {
+                throw new InvalidDataException("Student's id is invalid!");
+            }
+
+            return true;
+        }
+
         public override void Action()
         {
             Console.WriteLine("Please enter mark's properties:");
@@ -28,29 +51,6 @@ namespace SchoolAverageCalculator.Pages.Marks
             Console.WriteLine();
             Console.WriteLine("Mark created successfully!");
             InputManager.WaitForAnyKey();
-        }
-
-        private int? _subjectId;
-        private int? _studentId;
-
-        public AddMarkPage(int? subjectId, int? studentId)
-        {
-            _subjectId = subjectId;
-            _studentId = studentId;
-        }
-
-        public override bool Prepare()
-        {
-            if(_subjectId == null || !MyApp.DataService.SubjectsService.Exists(_subjectId.Value))
-            {
-                throw new InvalidDataException("Subject's id is invalid!");
-            }
-            if (_studentId == null || !MyApp.DataService.StudentsService.Exists(_studentId.Value))
-            {
-                throw new InvalidDataException("Student's id is invalid!");
-            }
-
-            return true;
         }
     }
 }

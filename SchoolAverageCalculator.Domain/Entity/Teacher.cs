@@ -14,6 +14,7 @@ namespace SchoolAverageCalculator.Domain.Entity
         public Teacher(string firstName, string? secondName, string lastName) : base(firstName, secondName, lastName)
         {
         }
+
         public Teacher(string firstName, string lastName) : base(firstName, lastName)
         {
         }
@@ -27,8 +28,8 @@ namespace SchoolAverageCalculator.Domain.Entity
         {
             if (obj == null) return false;
             if (obj.GetType() != typeof(Teacher)) return false;
-            Teacher toCompare = (Teacher)obj;
-            return (toCompare.Id == Id && toCompare.FirstName == FirstName && toCompare.MiddleName == MiddleName && toCompare.LastName == LastName);
+            Teacher comparedTeacher = (Teacher)obj;
+            return (comparedTeacher.Id == Id && comparedTeacher.FirstName == FirstName && comparedTeacher.MiddleName == MiddleName && comparedTeacher.LastName == LastName);
         }
     }
 }

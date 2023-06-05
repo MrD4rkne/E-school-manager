@@ -14,6 +14,7 @@ namespace SchoolAverageCalculator.Pages.Subjects
     public class SummarySubjectPage : ActionPage
     {
         public override string Title => "Summary";
+
         private int _id = -1;
 
         private SubjectVM _subject;
@@ -21,6 +22,15 @@ namespace SchoolAverageCalculator.Pages.Subjects
         public SummarySubjectPage(int subjectId)
         {
             _id= subjectId;
+        }
+
+        public override bool Prepare()
+        {
+            if (_id == -1)
+                return false;
+
+            _subject = MyApp.DataService.GetSubjectVM(_id);
+            return _subject != null;
         }
 
         public override void Action()
@@ -47,15 +57,6 @@ namespace SchoolAverageCalculator.Pages.Subjects
 
             Console.WriteLine();
             InputManager.WaitForAnyKey();
-        }
-
-        public override bool Prepare()
-        {
-            if (_id == -1)
-                return false;
-
-            _subject = MyApp.DataService.GetSubjectVM(_id);
-            return _subject != null;
         }
     }
 }

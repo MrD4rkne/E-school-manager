@@ -14,13 +14,23 @@ namespace SchoolAverageCalculator.Pages.Teachers
     public class SummaryTeacherPage : ActionPage
     {
         public override string Title => "Summary";
-        private int _id = -1;
+
+        private int _teacherId = -1;
 
         private TeacherVM _teacher;
 
         public SummaryTeacherPage(int studentId)
         {
-            _id= studentId;
+            _teacherId= studentId;
+        }
+
+        public override bool Prepare()
+        {
+            if (_teacherId == -1)
+                return false;
+
+            _teacher = MyApp.DataService.GetTeacherVM(_teacherId);
+            return _teacher != null;
         }
 
         public override void Action()
@@ -28,15 +38,6 @@ namespace SchoolAverageCalculator.Pages.Teachers
             Console.WriteLine(_teacher);
             Console.WriteLine();
             InputManager.WaitForAnyKey();
-        }
-
-        public override bool Prepare()
-        {
-            if (_id == -1)
-                return false;
-
-            _teacher = MyApp.DataService.GetTeacherVM(_id);
-            return _teacher != null;
         }
     }
 }

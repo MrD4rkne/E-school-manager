@@ -14,12 +14,25 @@ namespace SchoolAverageCalculator.Pages.Teachers
     public class ListTeachersPage : ActionPage
     {
         private ViewMode _viewMode;
-        public override string Title => Enum.GetName(typeof(ViewMode), _viewMode);
 
+        public override string Title => Enum.GetName(typeof(ViewMode), _viewMode);
 
         public ListTeachersPage(ViewMode viewMode) : base()
         {
             _viewMode = viewMode;
+        }
+
+        public override bool Prepare()
+        {
+            if (MyApp.DataService.TeachersService == null)
+            {
+                throw new InvalidDataException("TeachersService isn't initialized!");
+            }
+            if (!MyApp.DataService.TeachersService.HasAnyItems())
+            {
+                throw new InvalidDataException("There aren't any registered teachers!");
+            }
+            return true;
         }
 
         public override void Action()
@@ -42,19 +55,6 @@ namespace SchoolAverageCalculator.Pages.Teachers
 
                     return;
             }
-        }
-
-        public override bool Prepare()
-        {
-            if (MyApp.DataService.TeachersService == null)
-            {
-                throw new InvalidDataException("TeachersService isn't initialized!");
-            }
-            if (!MyApp.DataService.TeachersService.HasAnyItems())
-            {
-                throw new InvalidDataException("There aren't any registered teachers!");
-            }
-            return true;
         }
     }
     public enum ViewMode { List, Manage };

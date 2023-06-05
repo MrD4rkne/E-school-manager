@@ -16,7 +16,6 @@ namespace SchoolAverageCalculator.Pages.Settings
 
         public override string Title => "Manage extensions";
 
-
         public override void Draw()
         {
             Console.Clear();

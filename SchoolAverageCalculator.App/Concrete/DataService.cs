@@ -16,9 +16,13 @@ namespace SchoolAverageCalculator.App.Concrete
     public class DataService
     {
         public MarksService MarksService { get; private set; }
+
         public SubjectsService SubjectsService { get; private set; }
+
         public TeachersService TeachersService { get; private set;}
+
         public StudentsService StudentsService { get; private set; }
+
 
         public DataService(MarksService marksService, SubjectsService subjectsService, TeachersService teachersService, StudentsService studentsService)
         {
@@ -53,6 +57,7 @@ namespace SchoolAverageCalculator.App.Concrete
 
             return studentVM;
         }
+
         /// <summary>
         /// Get view model for subject (basic info + student with marks).
         /// </summary>
@@ -93,6 +98,11 @@ namespace SchoolAverageCalculator.App.Concrete
             return ret.ToArray();
         }
 
+        /// <summary>
+        /// Get teacher's viewmodel for full info
+        /// </summary>
+        /// <param name="id">Teacher's id</param>
+        /// <returns>Viewmodel or null, if teacher does not exist</returns>
         public TeacherVM? GetTeacherVM(int id)
         {
             Teacher? obj = TeachersService.GetItemById(id);
@@ -102,8 +112,6 @@ namespace SchoolAverageCalculator.App.Concrete
             TeacherVM vm = new(obj.FirstName, obj.MiddleName, obj.LastName, SubjectsService.GetSubjectsForTeacher(id).ToList());
             return vm;
         }
-
-        #region SavingData
 
         /// <summary>
         /// Save data from each services to files.
@@ -124,6 +132,7 @@ namespace SchoolAverageCalculator.App.Concrete
             string marksFile = Path.Combine(directory, "marks" + FileManager.GetProperExtension(type));
             FileManager.SaveToFile(MarksService.Items, marksFile, type);
         }
+
         /// <summary>
         /// Load data from files.
         /// </summary>
@@ -151,7 +160,7 @@ namespace SchoolAverageCalculator.App.Concrete
             if (marks != null)
                 MarksService.Items = marks;
         }
-        #endregion
+
         /// <summary>
         /// Clear data from each of services.
         /// </summary>

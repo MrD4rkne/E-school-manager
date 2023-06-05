@@ -13,6 +13,7 @@ namespace SchoolAverageCalculator.Pages.Teachers
     public class AddTeacherPage : ActionPage
     {
         public override string Title => "Add";
+
         public override void Action()
         {
             Console.WriteLine("Please enter teacher's properties:");

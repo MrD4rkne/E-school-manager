@@ -13,6 +13,7 @@ namespace SchoolAverageCalculator.Domain.Common
     {
         [XmlAttribute]
         public int Id { get; set; }
+
         public BaseEntity ShallowCopy()
         {
             return (BaseEntity)this.MemberwiseClone();

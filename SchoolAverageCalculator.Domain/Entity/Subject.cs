@@ -10,12 +10,14 @@ namespace SchoolAverageCalculator.Domain.Entity
     public class Subject : BaseEntity
     {
         public string Name { get; set; }
+
         public int? TeacherId { get; set; }
 
         public Subject(string name, int? teacherId) {
             Name = name;
             TeacherId = teacherId;
         }
+
         public Subject(string name) : this(name, null) { }
 
         /// <summary>
@@ -32,8 +34,8 @@ namespace SchoolAverageCalculator.Domain.Entity
         {
             if(obj == null) return false;
             if(obj.GetType() != typeof(Subject)) return false;
-            Subject toCompare = (Subject)obj;
-            return (toCompare.Name == Name && toCompare.TeacherId == TeacherId);
+            Subject comparedSubject = (Subject)obj;
+            return (comparedSubject.Name == Name && comparedSubject.TeacherId == TeacherId);
         }
     }
 }

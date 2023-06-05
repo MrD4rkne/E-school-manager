@@ -11,6 +11,8 @@ namespace SchoolAverageCalculator.App.Concrete
     public class NavigationService
     {
         private Stack<BasePage> NavigationStack = new Stack<BasePage>();
+        private List<string> _routes = new();
+
         /// <summary>
         /// Navigate to page and put it onto stack
         /// </summary>
@@ -23,6 +25,20 @@ namespace SchoolAverageCalculator.App.Concrete
             ExpandRoute(page.Title);
             ShowPage(page);
         }
+
+        /// <summary>
+        /// Navigate backwards, Pop Page from Stack
+        /// </summary>
+        public void GoBack(bool shouldReloadData = false)
+        {
+            if (NavigationStack.Count > 1)
+            {
+                NavigationStack.Pop();
+                CollapseRoute();
+            }
+            ShowPage(NavigationStack.Peek(), shouldReloadData);
+        }
+
         /// <summary>
         /// Show page - Draw() (and Prepare() if it there is need to load data)
         /// </summary>
@@ -55,17 +71,7 @@ namespace SchoolAverageCalculator.App.Concrete
                 page.Draw();
             GoBack();
         }
-        /// <summary>
-        /// Navigate backwards, take last Page from Stack
-        /// </summary>
-        public void GoBack(bool shouldReloadData = false)
-        {
-            if (NavigationStack.Count > 1) {
-                NavigationStack.Pop();
-                CollapseRoute();
-            }
-            ShowPage(NavigationStack.Peek(), shouldReloadData);
-        }
+
         /// <summary>
         /// Refresh page - (Re) Draw() without Prepare()
         /// </summary>
@@ -73,9 +79,11 @@ namespace SchoolAverageCalculator.App.Concrete
         {
             ShowPage(NavigationStack.Peek(), shouldReloadData);
         }
-    
 
-        private List<string> _routes = new();
+        /// <summary>
+        /// Get full route for current stack data
+        /// </summary>
+        /// <returns></returns>
         private string GetFullRoute()
         {
             if (_routes.Count == 0)
@@ -88,6 +96,7 @@ namespace SchoolAverageCalculator.App.Concrete
             }
             return ret;
         }
+
         /// <summary>
         /// Add latest page to route
         /// </summary>
@@ -96,6 +105,7 @@ namespace SchoolAverageCalculator.App.Concrete
         {
             _routes.Add(endPoint);
         }
+
         /// <summary>
         /// Remove latest page from route
         /// </summary>

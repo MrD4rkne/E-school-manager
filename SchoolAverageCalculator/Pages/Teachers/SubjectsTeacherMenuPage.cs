@@ -14,6 +14,30 @@ namespace SchoolAverageCalculator.Pages.Teachers
     {
         public override string Title => "Teaching subjects";
 
+        private int? _teacherId;
+        private Subject[] _subjects;
+        public SubjectsTeacherMenuPage(int? teacherId)
+        {
+            _teacherId = teacherId;
+        }
+
+        public override bool Prepare()
+        {
+            if (!_teacherId.HasValue)
+            {
+                throw new InvalidDataException("Teacher id cannot be null");
+            }
+
+            _subjects = MyApp.DataService.SubjectsService.GetSubjectsForTeacher(_teacherId.Value);
+
+            if (_subjects == null || _subjects.Length == 0)
+            {
+                throw new InvalidDataException("Teacher has not got any subjects assigned!");
+            }
+            return true;
+
+        }
+
         public override void Action()
         {
             Console.WriteLine("Subjects:");
@@ -24,30 +48,6 @@ namespace SchoolAverageCalculator.Pages.Teachers
 
             Console.WriteLine();
             InputManager.WaitForAnyKey();
-        }
-
-        private int? _teacherId;
-        private Subject[] _subjects;
-        public SubjectsTeacherMenuPage(int? teacherId)
-        {
-            _teacherId = teacherId;
-        }
-
-        public override bool Prepare()
-        {
-            if(!_teacherId.HasValue)
-            {
-                throw new InvalidDataException("Teacher id cannot be null");
-            }
-
-            _subjects = MyApp.DataService.SubjectsService.GetSubjectsForTeacher(_teacherId.Value);
-
-            if(_subjects == null || _subjects.Length== 0)
-            {
-                throw new InvalidDataException("Teacher has not got any subjects assigned!");
-            }
-            return true;
-
         }
     }
 }

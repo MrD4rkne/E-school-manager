@@ -16,6 +16,25 @@ namespace SchoolAverageCalculator.Pages.Teachers
 
         public override string[] Options => new string[] { "First Name", "Middle Name", "Last Name", "Save & Return", "Abort & Return", "Subjects", "Delete"  };
 
+        private int _teacherId;
+
+        private Teacher _teacher;
+        public EditTeacherPage(int id)
+        {
+            _teacherId = id;
+        }
+
+        public override bool Prepare()
+        {
+            var teacher = MyApp.DataService.TeachersService.GetItemById(_teacherId);
+            if (teacher == null)
+            {
+                throw new InvalidDataException("Teacher doesn't exist");
+            }
+            _teacher = (Teacher)teacher.ShallowCopy();
+            return true;
+        }
+
         public override void Action()
         {
             Console.WriteLine($"First Name: {_teacher.FirstName}");
@@ -62,23 +81,6 @@ namespace SchoolAverageCalculator.Pages.Teachers
                     return;
             }
             MyApp.Navigation.RefreshPage();
-        }
-        private int _teacherId;
-        private Teacher _teacher;
-        public EditTeacherPage(int id)
-        {
-            _teacherId = id;
-        }
-
-        public override bool Prepare()
-        {
-            var teacher = MyApp.DataService.TeachersService.GetItemById(_teacherId);
-            if (teacher == null)
-            {
-                throw new InvalidDataException("Teacher doesn't exist");
-            }
-            _teacher = (Teacher)teacher.ShallowCopy();
-            return true;
         }
     }
 }

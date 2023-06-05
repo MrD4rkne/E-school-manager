@@ -5,42 +5,52 @@ using System.Text;
 using System.Threading.Tasks;
 using SchoolAverageCalculator.App.Helpers;
 using SchoolAverageCalculator.App.Common;
+using SchoolAverageCalculator.Domain.Entity;
 
 namespace SchoolAverageCalculator.App.Concrete
 {
     public class SettingsService
     {
+        private const string serializerTypeVariable = "serializer";
+
+        private Settings _settings;
+
         public SettingsService() {
             Load();
         }
 
-        private Settings _settings;
-        #region LoadAndSave
         private void Load()
         {
-            string path = Path.Combine(FileManager.GetFolder(), "settings.xml");
+            string settingsFilePath = Path.Combine(FileManager.GetFolder(), "settings.xml");
 
-            _settings = FileManager.LoadFromFile<Settings>(path, SerializerType.XML);
+            _settings = FileManager.LoadFromFile<Settings>(settingsFilePath, SerializerType.XML);
 
             if(_settings == null)
                 _settings= new Settings();
         }
+
         private void Save()
         {
-            string path = Path.Combine(FileManager.GetFolder(), "settings.xml");
-            FileManager.SaveToFile<Settings>(_settings, path, SerializerType.XML);
+            string settingsFilePath = Path.Combine(FileManager.GetFolder(), "settings.xml");
+            FileManager.SaveToFile<Settings>(_settings, settingsFilePath, SerializerType.XML);
         }
-        #endregion
 
-        private const string serializerTypeVariable = "serializer";
         public SerializerType GetSerializerType()
         {
             return _settings.SerializerType;
         }
+
         public void SetSerializerType(SerializerType serializer)
         {
             if (_settings.SerializerType != serializer)
             {
+                // rewrite previously saved files in this extension
+                string directory = FileManager.GetFolder();
+                FileManager.Rewrite<List<Mark>>(Path.Combine(directory, "marks" + FileManager.GetProperExtension(_settings.SerializerType)), _settings.SerializerType, serializer);
+                FileManager.Rewrite<List<Teacher>>(Path.Combine(directory, "teachers" + FileManager.GetProperExtension(_settings.SerializerType)), _settings.SerializerType, serializer);
+                FileManager.Rewrite<List<Student>>(Path.Combine(directory, "students" + FileManager.GetProperExtension(_settings.SerializerType)), _settings.SerializerType, serializer);
+                FileManager.Rewrite<List<Subject>>(Path.Combine(directory, "subjects" + FileManager.GetProperExtension(_settings.SerializerType)), _settings.SerializerType, serializer);
+
                 _settings.SerializerType = serializer;
                 Save();
             }

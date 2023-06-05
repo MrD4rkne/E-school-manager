@@ -10,9 +10,9 @@ namespace SchoolAverageCalculator.Pages.Students
 {
     public class MenuStudentsPage : App.Abstract.MenuPage
     {
-        public override string[] Options => new string[] { "List", "Add", "Manage", "Return" };
-
         public override string Title => "Students";
+
+        public override string[] Options => new string[] { "List", "Add", "Manage", "Return" };
 
         public override void HandleChoice(int option)
         {

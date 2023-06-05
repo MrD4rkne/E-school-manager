@@ -22,6 +22,19 @@ namespace SchoolAverageCalculator.Pages.Students
             _viewMode = viewMode;
         }
 
+        public override bool Prepare()
+        {
+            if (MyApp.DataService.MarksService == null)
+            {
+                throw new InvalidDataException("StudentsService isn't initialized!");
+            }
+            if (!MyApp.DataService.StudentsService.HasAnyItems())
+            {
+                throw new InvalidDataException("There aren't any registered students!");
+            }
+            return true;
+        }
+
         public override void Action()
         {
             switch (_viewMode)
@@ -42,19 +55,6 @@ namespace SchoolAverageCalculator.Pages.Students
 
                     return;
             }
-        }
-
-        public override bool Prepare()
-        {
-            if (MyApp.DataService.MarksService == null)
-            {
-                throw new InvalidDataException("StudentsService isn't initialized!");
-            }
-            if (!MyApp.DataService.StudentsService.HasAnyItems())
-            {
-                throw new InvalidDataException("There aren't any registered students!");
-            }
-            return true;
         }
     }
     public enum ViewMode { List, Manage };

@@ -13,6 +13,7 @@ namespace SchoolAverageCalculator.Pages.Settings
     public class SettingsPage : MenuPage
     {
         public override string Title => "Settings";
+
         public override string[] Options => new string[] { "Save data", "Reload data", "Clear data","Manage files' extensions", "Return" };
 
         public override void HandleChoice(int option)

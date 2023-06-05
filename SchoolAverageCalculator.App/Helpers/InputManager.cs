@@ -19,11 +19,11 @@ namespace SchoolAverageCalculator.App.Helpers
         /// <returns>Numeric input</returns>
         public static int GetNumericInput(string message = "Input: ", bool clearUnsuccessful = true)
         {
-            int ret;
+            int userIntegerInput;
             string? input;
             Console.Write(message);
             input = Console.ReadLine();
-            while (!int.TryParse(input, out ret))
+            while (!int.TryParse(input, out userIntegerInput))
             {
                 if (clearUnsuccessful && !string.IsNullOrEmpty(input))
                 {
@@ -34,7 +34,7 @@ namespace SchoolAverageCalculator.App.Helpers
                 }
                 input = Console.ReadLine();
             }
-            return ret;
+            return userIntegerInput;
         }
 
         /// <summary>
@@ -47,11 +47,11 @@ namespace SchoolAverageCalculator.App.Helpers
         /// <returns>Numeric input</returns>
         public static int GetNumericInput(int min, int max, string message = "Input: ", bool clearUnsuccessful = true)
         {
-            int ret;
+            int userIntegerInput;
             string? input;
             Console.Write(message);
             input = Console.ReadLine();
-            while (!int.TryParse(input, out ret) || ret < min || ret > max)
+            while (!int.TryParse(input, out userIntegerInput) || userIntegerInput < min || userIntegerInput > max)
             {
 
                 if (clearUnsuccessful && !string.IsNullOrEmpty(input))
@@ -63,7 +63,7 @@ namespace SchoolAverageCalculator.App.Helpers
                 }
                 input = Console.ReadLine();
             }
-            return ret;
+            return userIntegerInput;
         }
 
         /// <summary>
@@ -95,12 +95,12 @@ namespace SchoolAverageCalculator.App.Helpers
         /// <returns>Decimal input</returns>
         public static decimal GetDecimalInput(decimal min, decimal max, string message = "Input: ", bool clearUnsuccessful = true)
         {
-            decimal ret;
+            decimal userDecimalInput;
             string? input;
 
             Console.Write(message);
             input = Console.ReadLine();
-            while (!decimal.TryParse(input, out ret) || ret < min || ret > max)
+            while (!decimal.TryParse(input, out userDecimalInput) || userDecimalInput < min || userDecimalInput > max)
             {
 
                 if (clearUnsuccessful && !string.IsNullOrEmpty(input))
@@ -112,7 +112,7 @@ namespace SchoolAverageCalculator.App.Helpers
                 }
                 input = Console.ReadLine();
             }
-            return ret;
+            return userDecimalInput;
         }
 
         /// <summary>
@@ -123,25 +123,26 @@ namespace SchoolAverageCalculator.App.Helpers
         /// <returns>Decimal input</returns>
         public static decimal GetDecimalInput(string message = "Input: ",  bool clearUnsuccessful = true)
         {
-            decimal ret;
-            string? input;
+            decimal userDecimalInput;
+            string? userInput;
 
             Console.Write(message);
-            input = Console.ReadLine();
-            while (!decimal.TryParse(input, out ret))
+            userInput = Console.ReadLine();
+            while (!decimal.TryParse(userInput, out userDecimalInput))
             {
 
-                if (clearUnsuccessful && !string.IsNullOrEmpty(input))
+                if (clearUnsuccessful && !string.IsNullOrEmpty(userInput))
                 {
 
                     Console.SetCursorPosition(message.Length, Console.CursorTop - 1);
-                    Console.Write(new string(' ', input.Length));
+                    Console.Write(new string(' ', userInput.Length));
                     Console.SetCursorPosition(message.Length, Console.CursorTop);
                 }
-                input = Console.ReadLine();
+                userInput = Console.ReadLine();
             }
-            return ret;
+            return userDecimalInput;
         }
+
         /// <summary>
         /// Wait for any key press
         /// </summary>

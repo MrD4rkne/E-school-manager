@@ -12,9 +12,11 @@ namespace SchoolAverageCalculator.Domain.Entity
         public Student(string firstName, string lastName) : base(firstName, lastName)
         {
         }
+
         public Student(string firstName, string? middleName, string lastName) : base(firstName, middleName,lastName)
         {
         }
+
         /// <summary>
         /// Only for serialization
         /// </summary>
@@ -24,8 +26,8 @@ namespace SchoolAverageCalculator.Domain.Entity
         {
             if (obj == null) return false;
             if (obj.GetType() != typeof(Student)) return false;
-            Student toCompare = (Student)obj;
-            return (toCompare.Id == Id && toCompare.FirstName == FirstName && toCompare.MiddleName == MiddleName && toCompare.LastName == LastName);
+            Student comparedStudent = (Student)obj;
+            return (comparedStudent.Id == Id && comparedStudent.FirstName == FirstName && comparedStudent.MiddleName == MiddleName && comparedStudent.LastName == LastName);
         }
     }
 }

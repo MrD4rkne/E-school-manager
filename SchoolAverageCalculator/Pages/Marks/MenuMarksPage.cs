@@ -10,9 +10,32 @@ namespace SchoolAverageCalculator.Pages.Marks
 {
     public class MenuMarksPage : MenuPage
     {
+        public override string Title => "Marks";
+
         public override string[] Options => (_subjectId.HasValue && _studentId.HasValue) ? new string[] { "List", "Add", "Return" } : new string[] { "List", "Return" };
 
-        public override string Title => "Marks";
+        private int? _subjectId;
+
+        private int? _studentId;
+
+        public MenuMarksPage(int? subjectId, int? studentId)
+        {
+            _subjectId = subjectId;
+            _studentId = studentId;
+        }
+
+        public override bool Prepare()
+        {
+            // atleast one is should not be null
+            if (!_subjectId.HasValue || !MyApp.DataService.SubjectsService.Exists(_subjectId.Value))
+            {
+                if (!_studentId.HasValue || !MyApp.DataService.StudentsService.Exists(_studentId.Value))
+                {
+                    throw new InvalidDataException("Student's id is invalid!");
+                }
+            }
+            return true;
+        }
 
         public override void HandleChoice(int option)
         {
@@ -33,28 +56,6 @@ namespace SchoolAverageCalculator.Pages.Marks
                     return;
             }
             MyApp.Navigation.RefreshPage(false);
-        }
-
-        private int? _subjectId;
-        private int? _studentId;
-
-        public MenuMarksPage(int? subjectId, int? studentId)
-        {
-            _subjectId = subjectId;
-            _studentId = studentId;
-        }
-
-        public override bool Prepare()
-        {
-            // atleast one is should not be null
-            if (!_subjectId.HasValue || !MyApp.DataService.SubjectsService.Exists(_subjectId.Value))
-            {
-                if (!_studentId.HasValue || !MyApp.DataService.StudentsService.Exists(_studentId.Value))
-                {
-                    throw new InvalidDataException("Student's id is invalid!");
-                }
-            }
-            return true;
         }
     }
 }
