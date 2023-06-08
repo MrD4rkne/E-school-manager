@@ -13,7 +13,7 @@ namespace ESchoolManager.Tests
     public class MarksServiceTest
     {
         [Fact]
-        // Matter of fact, it checks both implementations
+        // Calculating average for all marks
         public void GetAverage()
         {
             // Arrange
@@ -25,6 +25,27 @@ namespace ESchoolManager.Tests
             // Action
             decimal average = service.GetAverage();
             decimal emptyAverage = service.GetAverage(null);
+
+            // Assert
+            average.Should().Be(50);
+            emptyAverage.Should().Be(0);
+        }
+
+        [Fact]
+        // Calculating average for list
+        public void GetAverage2()
+        {
+            // Arrange
+            MarksService marksService = new MarksService();
+
+            List<Mark> marks = new();
+            marks.Add(new(0, 0, 100, 20));
+            marks.Add(new(0, 0, 100, 40));
+            marks.Add(new(0, 0, 000, 60));
+
+            // Action
+            decimal average = marksService.GetAverage(marks);
+            decimal emptyAverage = marksService.GetAverage(null);
 
             // Assert
             average.Should().Be(50);
