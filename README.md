@@ -14,10 +14,11 @@ Choose what to do:
 1. Students
 2. Teachers
 3. Subjects
-4. Close app 
+4. Settings
+5. Close app
 ```
 
-Points: 1-3. navigates you to manage certain entities; 4. closes the app 
+Options: 1-3. navigates you to manage certain entities; 4. navigates you to settings; 5. closes the app
 ### Submenus
 ```
 Choose what to do:
@@ -38,3 +39,9 @@ or
 
 + Marks -> Manage -> (entity) -> Marks
 
+### Saving
+You can save, load or clear your data in settings (Main menu -> 4. Settings). 
+
+There also an option to choose file type of your saves. If you change it, previos data save will be rewritten to match your new choice.
+
+There IS NOT ANY autosave, you must do all saves by manually selecting proper action.
