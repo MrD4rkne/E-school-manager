@@ -45,3 +45,6 @@ You can save, load or clear your data in settings (Main menu -> 4. Settings).
 There also an option to choose file type of your saves. If you change it, previos data save will be rewritten to match your new choice.
 
 There IS NOT ANY autosave, you must do all saves by manually selecting proper action.
+
+## Author
+Marcin Szopa
